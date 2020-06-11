@@ -1,3 +1,15 @@
+/** 
+ * Overall the program works and satisfies all requirements.
+ * I am happy with it, but some functionality I would like to improve.
+ * For instance,
+ * 
+ * Adding a toggling functionality into the answer buttons.
+ * Adding in a display message for subissions with no checked answer.
+ * Cleaning up some of the logic.
+ * 
+ * At this point, I need to move on to the next project and focus on that.
+ * 
+*/
 const store = {
   // 5 or more questions are required
   questions: [
@@ -206,6 +218,9 @@ const updateState = () => {
 	// Quiz Complete screen, end of quiz, update state for final screen.
 	else if ( store.quizStarted === 1 && store.questionNumber === store.questions.length ) store.quizStarted = 2;
 
+	// Quiz Complete screen, reset on submit.
+	else if ( store.quizStarted === 2 ) store.quizStarted = false;
+
 	//console.log ( 'updateState completed' );
 
 };
@@ -274,6 +289,25 @@ const formSubmit = () => {
 
 		}
 
+		else if ( store.quizStarted === 2 ) {
+			
+			updateState();
+
+			render ( generateHTML );
+
+		}
+
+		else if ( store.quizStarted === false ) {
+
+			store.questionNumber = 0;
+
+			store.score = [ 0, 0 ];
+
+			updateState();
+
+			render ( generateHTML );
+		}
+		
 		render ( generateHTML );
 
 		//console.log ( 'formSubmitHandler completed' );
