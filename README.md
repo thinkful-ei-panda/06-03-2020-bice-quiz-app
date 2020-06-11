@@ -10,7 +10,7 @@
 ##### https://thinkful-ei-panda.github.io/06-03-2020-bice-quiz-app
 
 ### Gist:
-##### https://gist.github.com/certifiedbice/34e3a8431ca61170250b49557d86b25c.js
+##### https://gist.github.com/certifiedbice/34e3a8431ca61170250b49557d86b25c
 
 ### Technical Map:
 #### https://gitmind.com/app/doc/256370318
