@@ -1,21 +1,21 @@
-## Boilerplate app structure for Quiz App project
+## Quiz App
 
-#### Created By: 
-#### Taken Over By: Bice: certifiedbice@gmail.com - 06 / 07 / 2020
+#### Created By: Bice: certifiedbice@gmail.com - 06 / 03 / 2020
+#### Completed On: Bice: certifiedbice@gmail.com - 06 / 11 / 2020
 
 ### Git Repo:
-##### https://github.com/thinkful-ei-panda/Bice-Quiz-App
+##### https://github.com/thinkful-ei-panda/06-03-2020-bice-quiz-app
 
 ### Git Page:
-##### https://thinkful-ei-panda.github.io/Bice-Quiz-App/
+##### https://thinkful-ei-panda.github.io/06-03-2020-bice-quiz-app
 
 ### Gist:
-##### https://gist.github.com/certifiedbice/d1871831e18d738b92ce96fc7484bd86
+##### https://gist.github.com/certifiedbice/34e3a8431ca61170250b49557d86b25c.js
 
 ### Technical Map:
-#### https://gitmind.com/app/doc/7db354824
-#### https://thinkful-ei-panda.github.io/Bice-Quiz-App/quiz-app-map.jpg
-#### https://thinkful-ei-panda.github.io/Bice-Quiz-App/quiz-app-map.pdf
+#### https://gitmind.com/app/doc/256370318
+#### https://thinkful-ei-panda.github.io/06-03-2020-bice-quiz-app/quiz-app-map.jpg
+#### https://thinkful-ei-panda.github.io/06-03-2020-bice-quiz-app/quiz-app-map.pdf
 
 ### Napkin Plan - Quiz App
 
