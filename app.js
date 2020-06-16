@@ -1,15 +1,3 @@
-/** 
- * Overall the program works and satisfies all requirements.
- * I am happy with it, but some functionality I would like to improve.
- * For instance,
- * 
- * Adding a toggling functionality into the answer buttons.
- * Adding in a display message for subissions with no checked answer.
- * Cleaning up some of the logic.
- * 
- * At this point, I need to move on to the next project and focus on that.
- * 
-*/
 const store = {
   // 5 or more questions are required
   questions: [
@@ -77,35 +65,40 @@ const isAnswered = () => {
 
 };
 
-const render = ( html ) => {
+const render = () => {
 //renders the content to the page.
 	
 	//console.log ( 'render started' );
-	
-	$ ( 'main' ).html ( html );
-	
-	//console.log ( 'render completed' );
-	
-};
 
-const generateHTML = () => {
-// Function builds state based html for injection.
-
-	//console.log ( 'generateHTML started' );
-	
 	// Grab the relevant question data for use.
 	if ( store.quizStarted === 0 ) {
+
 		currentQuestion = store.questions [ store.questionNumber ].question;
 	
 		currentAnswers = store.questions [ store.questionNumber ].answers;
 
 		currentCorrectAnswer = store.questions [ store.questionNumber ].correctAnswer;
+
 	}
 
-	// Begin screen html.
-	if ( store.quizStarted === false ) {
-		
-		return `
+	let html = '';
+
+	if ( store.quizStarted === false ) $ ( 'main' ).html ( generateStartScreen ( html ) );
+
+	if ( store.quizStarted === 0 ) $ ( 'main' ).html ( generateQuestionScreen ( html ) );
+
+	else if ( store.quizStarted === 1 ) $ ( 'main' ).html ( generateAnswerScreen ( html ) );
+
+	else if ( store.quizStarted === 2 ) $ ( 'main' ).html ( generateFinishScreen ( html ) );
+
+	//console.log ( 'render completed' );
+	
+};
+
+const generateStartScreen = () => {
+// Start screen html.
+
+	return `
 			<div class="wrapper">
 				<div id="quiz-container">
 					<form id="quiz-app-form" action="http://someform.php">
@@ -116,48 +109,48 @@ const generateHTML = () => {
 			</div>
 		`;
 
-	}
+};
 
-	// Question screen html.
-	if ( store.quizStarted === 0 ) {
+const generateQuestionScreen = () => {
+// Question screen html.
+
+	let liString = '';
+
+	// Iteration here to build the <li>s for insertion into the output HTML.
+	currentAnswers.forEach ( ( item, index ) => {
+
+		// I realize that there is a better way to implement the button click functionality
+		// through declaring an event handler rather than the onclick used here. This is an 
+		// improvement I would like to see made, but I struggled with the other implementation.
+		// - Bice
+		liString += `<li><input class="quiz-app-form-button" id="form-button-${ index }" type="button" value="${ item }"></input></li>`;
 		
-		let liString = '';
+	});
 
-		// Iteration here to build the <li>s for insertion into the output HTML.
-		currentAnswers.forEach ( ( item, index ) => {
-
-			// I realize that there is a better way to implement the button click functionality
-			// through declaring an event handler rather than the onclick used here. This is an 
-			// improvement I would like to see made, but I struggled with the other implementation.
-			// - Bice
-			liString += `<li><input class="quiz-app-form-button" id="form-button-${ index }" type="button" value="${ item }"></input></li>`;
-			
-		});
-
-		return `
-			<div class="wrapper">
-				<div id="quiz-container">
-					<form id="quiz-app-form" action="http://someform.php">
-						<legend id="quiz-app-form-legend">${ currentQuestion }</legend>
-							<ul id="quiz-app-form-ul"> 
-								${ liString }
-							</ul>
-							<button type="submit" id="quiz-app-form-submit-button">Next Question</button>
-					</form>
-					<div>Total questions: ${ store.questions.length }</div>
-					<div>Unanswered questions: ${ store.questions.length - store.questionNumber }</div>
-					<div>Incorrect questions: ${ store.score [ 0 ] }</div>
-					<div>Correct questions: ${ store.score [ 1 ] }</div>
-				</div>
+	return `
+		<div class="wrapper">
+			<div id="quiz-container">
+				<form id="quiz-app-form" action="http://someform.php">
+					<legend id="quiz-app-form-legend">${ currentQuestion }</legend>
+						<ul id="quiz-app-form-ul"> 
+							${ liString }
+						</ul>
+						<button type="submit" id="quiz-app-form-submit-button">Next Question</button>
+				</form>
+				<div>Total questions: ${ store.questions.length }</div>
+				<div>Unanswered questions: ${ store.questions.length - store.questionNumber }</div>
+				<div>Incorrect questions: ${ store.score [ 0 ] }</div>
+				<div>Correct questions: ${ store.score [ 1 ] }</div>
 			</div>
-		`;
+		</div>
+	`;
 
-	}
+};
 
-	// Answer screen html.
-	else if ( store.quizStarted === 1 ) {
+const generateAnswerScreen = () => {
+// Answer screen html.
 
-		let answerMsg = '';
+	let answerMsg = '';
 		
 		if ( store.selectedAnswer !== currentCorrectAnswer ) answerMsg = 'Incorrect!';
 
@@ -177,27 +170,23 @@ const generateHTML = () => {
 			</div>
 		`;
 
-	}
+};
 
-	// Quiz completed.
-	else if ( store.quizStarted === 2 ) {
-		
-		return `
-			<div class="wrapper">
-				<div id="quiz-container">
-					<form id="quiz-app-form" action="http://someform.php">
-						<legend id="quiz-app-form-legend"><h2>Quiz Complete!</h2></legend>
-						<p>Congratulations, you're smart!<p>
-						<p>You answered ${ store.score [ 1 ] } of ${ store.questions.length } questions correctly.</p>
-						<button type="submit" id="quiz-app-form-submit-button">Take the quiz again?</button>
-					</form>
-				</div>
-			</div>
-		`;
+const generateFinishScreen = () => {
+// Quiz completed screen html.
 
-	}
-	
-	//console.log ( 'generateHTML completed' );
+	return `
+	<div class="wrapper">
+		<div id="quiz-container">
+			<form id="quiz-app-form" action="http://someform.php">
+				<legend id="quiz-app-form-legend"><h2>Quiz Complete!</h2></legend>
+				<p>Congratulations, you're smart!<p>
+				<p>You answered ${ store.score [ 1 ] } of ${ store.questions.length } questions correctly.</p>
+				<button type="submit" id="quiz-app-form-submit-button">Take the quiz again?</button>
+			</form>
+		</div>
+	</div>
+	`;
 
 };
 
@@ -293,7 +282,7 @@ const formSubmit = () => {
 			
 			updateState();
 
-			render ( generateHTML );
+			render ();
 
 		}
 
@@ -305,10 +294,10 @@ const formSubmit = () => {
 
 			updateState();
 
-			render ( generateHTML );
+			render ();
 		}
 		
-		render ( generateHTML );
+		render ();
 
 		//console.log ( 'formSubmitHandler completed' );
 
@@ -367,7 +356,7 @@ const init = () => {
 	// Set the score property to an array to contain the sums of both pos/neg answers.
 	store.score = [ 0, 0 ];
 
-	render ( generateHTML );
+	render ();
 
 	updateState ();
 
